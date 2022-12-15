@@ -15,6 +15,17 @@ export const InputForm = () => {
   const [sexual, setSexual] = useState("");
   const [agreement, setAgreement] = useState(false);
 
+  const signup = () => {
+    createUserWithEmailAndPassword(auth, emailAddress, password)
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((err) => {
+        alert("ユーザーの作成に失敗しました。");
+        console.log(err);
+      });
+  };
+
   return (
     <SInputForm>
       <CircleAvater />
@@ -48,12 +59,12 @@ export const InputForm = () => {
       />
       <RadioOption label={"性別:"} setValue={setSexual} />
       <CheckOption label={"利用規約:"} setValue={setAgreement} />
-      <Button>サインアップ</Button>
+      <Button onClick={signup}>サインアップ</Button>
     </SInputForm>
   );
 };
 
-const SInputForm = styled.form`
+const SInputForm = styled.div`
   padding: 20px;
   display: flex;
   flex-flow: column;

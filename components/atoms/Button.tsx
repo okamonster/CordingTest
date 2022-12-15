@@ -2,11 +2,12 @@ import styled from "@emotion/styled";
 
 type Props = {
   children: string;
+  onClick: () => void;
 };
 
 export const Button = (props: Props) => {
-  const { children } = props;
-  return <SButton type="submit">{children}</SButton>;
+  const { children, onClick } = props;
+  return <SButton onClick={onClick}>{children}</SButton>;
 };
 
 const SButton = styled.button`
