@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 type Props = {
-  image: File | null;
+  image: string | null;
 };
 export const CircleAvater = (props: Props) => {
   const { image } = props;
   return image ? (
-    <SCircleAvater src={image ? URL.createObjectURL(image) : ""} alt={""} />
+    <SCircleAvater src={image ? image : ""} alt={""} />
   ) : (
     <SImageNullAvater />
   );
