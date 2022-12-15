@@ -38,7 +38,7 @@ export const ProfileTemplate = (props: Props) => {
 
   return (
     <>
-      <Header>ユーザー名</Header>
+      <Header>user.userName</Header>
       <Profile
         profileImageURL={profileImageURL}
         currentUser={currentUser}
