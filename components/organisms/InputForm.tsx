@@ -23,13 +23,13 @@ export const InputForm = () => {
   const signup = () => {
     profileImage && userName && birthDay && sexual && agreement
       ? createUserWithEmailAndPassword(auth, emailAddress, password)
-          .then((userCredencial) => {
+          .then(async (userCredencial) => {
             const userDocRef = doc(db, `users/${userCredencial.user.uid}`);
             const userStorageRef = ref(
               storage,
               `users/${userCredencial.user.uid}/profile`
             );
-            setDoc(userDocRef, {
+            await setDoc(userDocRef, {
               uid: userCredencial.user.uid,
               userName: userName,
               emailAddress: emailAddress,
@@ -38,9 +38,7 @@ export const InputForm = () => {
               sexual: sexual,
             });
 
-            if (profileImage) {
-              uploadBytes(userStorageRef, profileImage[0]);
-            }
+            await uploadBytes(userStorageRef, profileImage[0]);
             Router.push("/profile");
           })
           .catch(() => {
@@ -81,7 +79,13 @@ export const InputForm = () => {
         setValue={setBirthDay}
       />
       <RadioOption label={"性別:"} setValue={setSexual} />
-      <CheckOption label={"利用規約:"} setValue={setAgreement} />
+      <CheckOption
+        label={"利用規約:"}
+        setValue={setAgreement}
+        link={
+          "https://menherasenpai.notion.site/457df49475494671807673a0a3346451"
+        }
+      />
       <Button onClick={signup}>サインアップ</Button>
     </SInputForm>
   );
