@@ -1,11 +1,21 @@
 import styled from "@emotion/styled";
+import { Dispatch } from "react";
 type Props = {
   type: string;
   placeholder: string;
+  value: string;
+  setValue: Dispatch<React.SetStateAction<string>>;
 };
 export const Input = (props: Props) => {
-  const { type, placeholder } = props;
-  return <SInput type={type} placeholder={placeholder} />;
+  const { type, placeholder, value, setValue } = props;
+  return (
+    <SInput
+      type={type}
+      placeholder={placeholder}
+      onChange={(e) => setValue(e.target.value)}
+      value={value}
+    />
+  );
 };
 
 const SInput = styled.input`
