@@ -21,30 +21,32 @@ export const InputForm = () => {
   const [sexual, setSexual] = useState("");
   const [agreement, setAgreement] = useState(false);
   const signup = () => {
-    createUserWithEmailAndPassword(auth, emailAddress, password)
-      .then((userCredencial) => {
-        const userDocRef = doc(db, `users/${userCredencial.user.uid}`);
-        const userStorageRef = ref(
-          storage,
-          `users/${userCredencial.user.uid}/profile`
-        );
-        setDoc(userDocRef, {
-          uid: userCredencial.user.uid,
-          userName: userName,
-          emailAddress: emailAddress,
-          password: password,
-          birthDay: birthDay,
-          sexual: sexual,
-        });
+    profileImage && userName && birthDay && sexual && agreement
+      ? createUserWithEmailAndPassword(auth, emailAddress, password)
+          .then((userCredencial) => {
+            const userDocRef = doc(db, `users/${userCredencial.user.uid}`);
+            const userStorageRef = ref(
+              storage,
+              `users/${userCredencial.user.uid}/profile`
+            );
+            setDoc(userDocRef, {
+              uid: userCredencial.user.uid,
+              userName: userName,
+              emailAddress: emailAddress,
+              password: password,
+              birthDay: birthDay,
+              sexual: sexual,
+            });
 
-        if (profileImage) {
-          uploadBytes(userStorageRef, profileImage[0]);
-        }
-        Router.push("/profile");
-      })
-      .catch(() => {
-        alert("ユーザーの作成に失敗しました。");
-      });
+            if (profileImage) {
+              uploadBytes(userStorageRef, profileImage[0]);
+            }
+            Router.push("/profile");
+          })
+          .catch(() => {
+            alert("ユーザーの作成に失敗しました。");
+          })
+      : alert("未入力の項目があります");
   };
 
   return (
