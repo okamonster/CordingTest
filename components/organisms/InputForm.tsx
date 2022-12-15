@@ -9,7 +9,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { InputImageOption } from "../molcules/InputImageOption";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
-import Link from "next/link";
 import Router from "next/router";
 
 export const InputForm = () => {
@@ -20,6 +19,7 @@ export const InputForm = () => {
   const [birthDay, setBirthDay] = useState("");
   const [sexual, setSexual] = useState("");
   const [agreement, setAgreement] = useState(false);
+
   const signup = () => {
     profileImage && userName && birthDay && sexual && agreement
       ? createUserWithEmailAndPassword(auth, emailAddress, password)
@@ -89,4 +89,9 @@ export const InputForm = () => {
 
 const SInputForm = styled.div`
   padding: 20px;
+  font-size: 14px;
+  @media (min-width: 640px) {
+    padding: 20px 150px;
+    font-size: 18px;
+  }
 `;

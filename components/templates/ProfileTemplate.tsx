@@ -5,8 +5,8 @@ import { doc, DocumentData, getDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { db, storage } from "../../firebase";
-import { CircleAvater } from "../atoms/CircleAvater";
 import { Header } from "../organisms/Header";
+import { Profile } from "../organisms/Profile";
 
 type Props = {
   currentUser: User | null | undefined;
@@ -39,16 +39,11 @@ export const ProfileTemplate = (props: Props) => {
   return (
     <>
       <Header>ユーザー名</Header>
-      <SProfile>
-        <CircleAvater image={profileImageURL} />
-        <p>メールアドレス:{currentUser?.email}</p>
-        <p>誕生日:{user?.birthDay}</p>
-        <p>性別:{user?.sexual}</p>
-      </SProfile>
+      <Profile
+        profileImageURL={profileImageURL}
+        currentUser={currentUser}
+        user={user}
+      />
     </>
   );
 };
-
-const SProfile = styled.div`
-  padding: 20px;
-`;
