@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 import { Button } from "../atoms/Button";
-import { CircleAvater } from "../atoms/CircleAvater";
 import { CheckOption } from "../molcules/AgreementOption";
 import { InputOption } from "../molcules/InputOption";
 import { RadioOption } from "../molcules/RadioOption";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { InputImageOption } from "../molcules/InputImageOption";
+import { doc, setDoc } from "firebase/firestore";
 
 export const InputForm = () => {
   const [profileImage, setProfileImage] = useState<FileList | null>(null);
@@ -20,7 +20,17 @@ export const InputForm = () => {
 
   const signup = () => {
     createUserWithEmailAndPassword(auth, emailAddress, password)
-      .then((user) => {})
+      .then((userCredencial) => {
+        const userDocRef = doc(db, `users/${userCredencial.user.uid}`);
+        setDoc(userDocRef, {
+          uid: userCredencial.user.uid,
+          userName: userName,
+          emailAddress: emailAddress,
+          password: password,
+          birthDay: birthDay,
+          sexual: sexual,
+        });
+      })
       .catch(() => {
         alert("ユーザーの作成に失敗しました。");
       });
