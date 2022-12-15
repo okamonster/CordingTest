@@ -7,7 +7,10 @@ import { InputOption } from "../molcules/InputOption";
 import { RadioOption } from "../molcules/RadioOption";
 import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { InputImageOption } from "../molcules/InputImageOption";
+
 export const InputForm = () => {
+  const [profileImage, setProfileImage] = useState<FileList | null>(null);
   const [userName, setUserName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -17,18 +20,15 @@ export const InputForm = () => {
 
   const signup = () => {
     createUserWithEmailAndPassword(auth, emailAddress, password)
-      .then((user) => {
-        console.log(user);
-      })
-      .catch((err) => {
+      .then((user) => {})
+      .catch(() => {
         alert("ユーザーの作成に失敗しました。");
-        console.log(err);
       });
   };
 
   return (
     <SInputForm>
-      <CircleAvater />
+      <InputImageOption setImage={setProfileImage} image={profileImage} />
       <InputOption
         type={"text"}
         placeholder={"ユーザー名"}
@@ -66,6 +66,4 @@ export const InputForm = () => {
 
 const SInputForm = styled.div`
   padding: 20px;
-  display: flex;
-  flex-flow: column;
 `;
