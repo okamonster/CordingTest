@@ -9,6 +9,8 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { InputImageOption } from "../molcules/InputImageOption";
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
+import Link from "next/link";
+import Router from "next/router";
 
 export const InputForm = () => {
   const [profileImage, setProfileImage] = useState<FileList | null>(null);
@@ -38,6 +40,7 @@ export const InputForm = () => {
         if (profileImage) {
           uploadBytes(userStorageRef, profileImage[0]);
         }
+        Router.push("/profile");
       })
       .catch(() => {
         alert("ユーザーの作成に失敗しました。");
