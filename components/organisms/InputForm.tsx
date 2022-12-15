@@ -4,10 +4,11 @@ import { Button } from "../atoms/Button";
 import { CheckOption } from "../molcules/AgreementOption";
 import { InputOption } from "../molcules/InputOption";
 import { RadioOption } from "../molcules/RadioOption";
-import { auth, db } from "../../firebase";
+import { auth, db, storage } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { InputImageOption } from "../molcules/InputImageOption";
 import { doc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes } from "firebase/storage";
 
 export const InputForm = () => {
   const [profileImage, setProfileImage] = useState<FileList | null>(null);
@@ -17,11 +18,14 @@ export const InputForm = () => {
   const [birthDay, setBirthDay] = useState("");
   const [sexual, setSexual] = useState("");
   const [agreement, setAgreement] = useState(false);
-
   const signup = () => {
     createUserWithEmailAndPassword(auth, emailAddress, password)
       .then((userCredencial) => {
         const userDocRef = doc(db, `users/${userCredencial.user.uid}`);
+        const userStorageRef = ref(
+          storage,
+          `users/${userCredencial.user.uid}/profile`
+        );
         setDoc(userDocRef, {
           uid: userCredencial.user.uid,
           userName: userName,
@@ -30,6 +34,10 @@ export const InputForm = () => {
           birthDay: birthDay,
           sexual: sexual,
         });
+
+        if (profileImage) {
+          uploadBytes(userStorageRef, profileImage[0]);
+        }
       })
       .catch(() => {
         alert("ユーザーの作成に失敗しました。");
