@@ -11,7 +11,7 @@ export const InputImageOption = (props: Props) => {
   const { setImage, image } = props;
   return (
     <SInputImageOption>
-      <CircleAvater image={image ? URL.createObjectURL(image[0]) : null} />
+      <CircleAvater image={image ? image[0] : null} />
       <InputFileButton setImage={setImage} />
     </SInputImageOption>
   );

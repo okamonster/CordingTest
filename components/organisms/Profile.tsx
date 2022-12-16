@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
-import { CircleAvater } from "../atoms/CircleAvater";
+import { ProfileCircleAvater } from "../atoms/ProfileCircleAvater";
 
 type Props = {
   profileImageURL: string | null;
@@ -12,7 +12,7 @@ export const Profile = (props: Props) => {
   const { profileImageURL, currentUser, user } = props;
   return (
     <SProfile>
-      <CircleAvater image={profileImageURL} />
+      <ProfileCircleAvater image={profileImageURL} />
       <p>メールアドレス:{currentUser?.email}</p>
       <p>誕生日:{user?.birthDay}</p>
       <p>性別:{user?.sexual}</p>
